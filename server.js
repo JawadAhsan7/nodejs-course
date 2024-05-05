@@ -6,6 +6,8 @@ const app = express();
 
 const notFound = require("./middlewares/not-found");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
+
+// CONNECT DATABASE
 const connectDB = require("./db/connect");
 
 // ROUTERS
