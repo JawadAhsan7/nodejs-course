@@ -1,4 +1,4 @@
-const { BadRequestError } = require("../errors");
+const { ConflictError } = require("../errors");
 const User = require("../models/User");
 
 const checkUserExistanceMiddleware = async (req, res, next) => {
@@ -6,7 +6,7 @@ const checkUserExistanceMiddleware = async (req, res, next) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
-        throw new BadRequestError("User creation failed: email already exists");
+        throw new ConflictError("User creation failed: email already exists");
 
     next();
 };
