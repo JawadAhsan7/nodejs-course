@@ -13,6 +13,7 @@ const connectDB = require("./db/connect");
 // ROUTERS
 const authRouter = require("./routes/auth");
 const jobsRouter = require("./routes/jobs");
+const authenticationMiddleware = require("./middlewares/authentication");
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
@@ -23,7 +24,7 @@ app.use(express.json());
 
 // ROUTES
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", authenticationMiddleware, jobsRouter);
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);
