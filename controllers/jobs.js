@@ -25,7 +25,20 @@ const createJob = async (req, res) => {
 };
 
 const updateJob = async (req, res) => {
-    res.send("updateJob");
+    const {
+        user: { id: userId },
+        params: { id: jobId },
+    } = req;
+
+    const job = await Job.findOneAndUpdate(
+        { _id: jobId, createdBy: userId },
+        req.body,
+        { runValidators: true, returnDocument: "after" },
+    );
+
+    if (!job) throw new NotFound(`No job to edit for id: ${jobId}`);
+
+    return res.status(StatusCodes.OK).json({ job });
 };
 
 const deleteJob = async (req, res) => {
